@@ -1,0 +1,306 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "from splinter import Browser\n",
+    "from bs4 import BeautifulSoup"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "executable_path = {\"executable_path\": \"C:\\chromedrv\\chromedriver.exe\"}\n",
+    "browser = Browser('chrome', **executable_path, headless=False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "url_nasa = 'https://mars.nasa.gov/news/'\n",
+    "browser.visit(url_nasa)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Visit Nasa News Site"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "None\n",
+      "NASA and the Department of Energy have completed a more detailed risk analysis for the Mars 2020 rover launch from Florida.NASA Updates Mars 2020 Mission Environmental ReviewNovember 21, 2019NASA Updates Mars 2020 Mission Environmental ReviewNASA and the Department of Energy have completed a more detailed risk analysis for the Mars 2020 rover launch from Florida.\n"
+     ]
+    }
+   ],
+   "source": [
+    "html = browser.html\n",
+    "firstsoup = BeautifulSoup(html, 'html.parser')\n",
+    "\n",
+    "title = firstsoup.find(\"div\", class_='content title')\n",
+    "para = firstsoup.find('li', class_='slide')\n",
+    "\n",
+    "fauxtitle = \"Nasa Updaates Mars 2020 Mission Environmental Review\"\n",
+    "#print(soup.prettify())\n",
+    "print(title)\n",
+    "print(para.text)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Visit JPL"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "url_jpl = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'\n",
+    "browser.visit(url_jpl)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 40,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "/spaceimages/images/mediumsize/PIA16225_ip.jpg\n",
+      "https://www/jpl.nasa.gov/spaceimages/images/mediumsize/PIA16225_ip.jpg\n"
+     ]
+    }
+   ],
+   "source": [
+    "html_jpl = browser.html\n",
+    "soup_jpl = BeautifulSoup(html_jpl, 'html.parser')\n",
+    "\n",
+    "img_jpl = soup_jpl.find('article', 'carousel_item')\n",
+    "u = img_jpl.a ['data-fancybox-href']\n",
+    "image_url=f'https://www/jpl.nasa.gov{u}'\n",
+    "featured_image_url = f'https://www.nasa.gov/spaceimage/images/walpaper/PIA16225-1920x1200.jpg'\n",
+    "#print(soup_jpl.prettify())\n",
+    "#print(img_jpl)\n",
+    "print(u)\n",
+    "print(image_url)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Mars Weather"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 66,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "url_weather = 'https://twitter.com/marswxreport?lang=en'\n",
+    "browser.visit(url_weather)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 69,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'InSight sol 349 (2019-11-19) low -103.2ºC (-153.8ºF) high -22.3ºC (-8.1ºF)\\nwinds from the SSE at 4.8 m/s (10.7 mph) gusting to 18.4 m/s (41.1 mph)\\npressure at 6.80 hPapic.twitter.com/8235o0ln3B'"
+      ]
+     },
+     "execution_count": 69,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "html_weather = browser.html\n",
+    "soup_weather = BeautifulSoup(html_weather, 'html.parser')\n",
+    "\n",
+    "mars_weather = soup_weather.find('p', class_='TweetTextSize TweetTextSize--normal js-tweet-text tweet-text')\n",
+    "mars_weather_text = mars_weather.text\n",
+    "mars_weather_text"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Mars Facts"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 70,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "url_facts = 'https://space-facts.com/mars/'\n",
+    "browser.visit(url_facts)\n",
+    "import pandas as pd"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 71,
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "TypeError",
+     "evalue": "'NoneType' object is not callable",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[1;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[1;31mTypeError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[1;32m~\\Anaconda3\\envs\\PythonWebMongo\\lib\\site-packages\\pandas\\io\\html.py\u001b[0m in \u001b[0;36m_parse\u001b[1;34m(flavor, io, match, attrs, encoding, displayed_only, **kwargs)\u001b[0m\n\u001b[0;32m    891\u001b[0m         \u001b[1;32mtry\u001b[0m\u001b[1;33m:\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[1;32m--> 892\u001b[1;33m             \u001b[0mtables\u001b[0m \u001b[1;33m=\u001b[0m \u001b[0mp\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0mparse_tables\u001b[0m\u001b[1;33m(\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0m\u001b[0;32m    893\u001b[0m         \u001b[1;32mexcept\u001b[0m \u001b[0mException\u001b[0m \u001b[1;32mas\u001b[0m \u001b[0mcaught\u001b[0m\u001b[1;33m:\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n",
+      "\u001b[1;32m~\\Anaconda3\\envs\\PythonWebMongo\\lib\\site-packages\\pandas\\io\\html.py\u001b[0m in \u001b[0;36mparse_tables\u001b[1;34m(self)\u001b[0m\n\u001b[0;32m    211\u001b[0m         \"\"\"\n\u001b[1;32m--> 212\u001b[1;33m         \u001b[0mtables\u001b[0m \u001b[1;33m=\u001b[0m \u001b[0mself\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0m_parse_tables\u001b[0m\u001b[1;33m(\u001b[0m\u001b[0mself\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0m_build_doc\u001b[0m\u001b[1;33m(\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m,\u001b[0m \u001b[0mself\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0mmatch\u001b[0m\u001b[1;33m,\u001b[0m \u001b[0mself\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0mattrs\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0m\u001b[0;32m    213\u001b[0m         \u001b[1;32mreturn\u001b[0m \u001b[1;33m(\u001b[0m\u001b[0mself\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0m_parse_thead_tbody_tfoot\u001b[0m\u001b[1;33m(\u001b[0m\u001b[0mtable\u001b[0m\u001b[1;33m)\u001b[0m \u001b[1;32mfor\u001b[0m \u001b[0mtable\u001b[0m \u001b[1;32min\u001b[0m \u001b[0mtables\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n",
+      "\u001b[1;32m~\\Anaconda3\\envs\\PythonWebMongo\\lib\\site-packages\\pandas\\io\\html.py\u001b[0m in \u001b[0;36m_build_doc\u001b[1;34m(self)\u001b[0m\n\u001b[0;32m    713\u001b[0m                 \u001b[1;31m# try to parse the input in the simplest way\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[1;32m--> 714\u001b[1;33m                 \u001b[0mr\u001b[0m \u001b[1;33m=\u001b[0m \u001b[0mparse\u001b[0m\u001b[1;33m(\u001b[0m\u001b[0mself\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0mio\u001b[0m\u001b[1;33m,\u001b[0m \u001b[0mparser\u001b[0m\u001b[1;33m=\u001b[0m\u001b[0mparser\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0m\u001b[0;32m    715\u001b[0m             \u001b[1;32mtry\u001b[0m\u001b[1;33m:\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n",
+      "\u001b[1;32m~\\Anaconda3\\envs\\PythonWebMongo\\lib\\site-packages\\lxml\\html\\__init__.py\u001b[0m in \u001b[0;36mparse\u001b[1;34m(filename_or_url, parser, base_url, **kw)\u001b[0m\n\u001b[0;32m    938\u001b[0m         \u001b[0mparser\u001b[0m \u001b[1;33m=\u001b[0m \u001b[0mhtml_parser\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[1;32m--> 939\u001b[1;33m     \u001b[1;32mreturn\u001b[0m \u001b[0metree\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0mparse\u001b[0m\u001b[1;33m(\u001b[0m\u001b[0mfilename_or_url\u001b[0m\u001b[1;33m,\u001b[0m \u001b[0mparser\u001b[0m\u001b[1;33m,\u001b[0m \u001b[0mbase_url\u001b[0m\u001b[1;33m=\u001b[0m\u001b[0mbase_url\u001b[0m\u001b[1;33m,\u001b[0m \u001b[1;33m**\u001b[0m\u001b[0mkw\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0m\u001b[0;32m    940\u001b[0m \u001b[1;33m\u001b[0m\u001b[0m\n",
+      "\u001b[1;32msrc/lxml/etree.pyx\u001b[0m in \u001b[0;36mlxml.etree.parse\u001b[1;34m()\u001b[0m\n",
+      "\u001b[1;32msrc/lxml/parser.pxi\u001b[0m in \u001b[0;36mlxml.etree._parseDocument\u001b[1;34m()\u001b[0m\n",
+      "\u001b[1;31mTypeError\u001b[0m: 'NoneType' object is not callable",
+      "\nDuring handling of the above exception, another exception occurred:\n",
+      "\u001b[1;31mTypeError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[1;32m<ipython-input-71-42f4ebfee42f>\u001b[0m in \u001b[0;36m<module>\u001b[1;34m\u001b[0m\n\u001b[0;32m      5\u001b[0m \u001b[1;31m#print(facts.text)\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0;32m      6\u001b[0m \u001b[1;33m\u001b[0m\u001b[0m\n\u001b[1;32m----> 7\u001b[1;33m \u001b[0mtable\u001b[0m \u001b[1;33m=\u001b[0m \u001b[0mpd\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0mread_html\u001b[0m\u001b[1;33m(\u001b[0m\u001b[0mfacts\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0m\u001b[0;32m      8\u001b[0m \u001b[0mtable\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n",
+      "\u001b[1;32m~\\Anaconda3\\envs\\PythonWebMongo\\lib\\site-packages\\pandas\\io\\html.py\u001b[0m in \u001b[0;36mread_html\u001b[1;34m(io, match, flavor, header, index_col, skiprows, attrs, parse_dates, thousands, encoding, decimal, converters, na_values, keep_default_na, displayed_only)\u001b[0m\n\u001b[0;32m   1103\u001b[0m         \u001b[0mna_values\u001b[0m\u001b[1;33m=\u001b[0m\u001b[0mna_values\u001b[0m\u001b[1;33m,\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0;32m   1104\u001b[0m         \u001b[0mkeep_default_na\u001b[0m\u001b[1;33m=\u001b[0m\u001b[0mkeep_default_na\u001b[0m\u001b[1;33m,\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[1;32m-> 1105\u001b[1;33m         \u001b[0mdisplayed_only\u001b[0m\u001b[1;33m=\u001b[0m\u001b[0mdisplayed_only\u001b[0m\u001b[1;33m,\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0m\u001b[0;32m   1106\u001b[0m     )\n",
+      "\u001b[1;32m~\\Anaconda3\\envs\\PythonWebMongo\\lib\\site-packages\\pandas\\io\\html.py\u001b[0m in \u001b[0;36m_parse\u001b[1;34m(flavor, io, match, attrs, encoding, displayed_only, **kwargs)\u001b[0m\n\u001b[0;32m    894\u001b[0m             \u001b[1;31m# if `io` is an io-like object, check if it's seekable\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0;32m    895\u001b[0m             \u001b[1;31m# and try to rewind it before trying the next parser\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[1;32m--> 896\u001b[1;33m             \u001b[1;32mif\u001b[0m \u001b[0mhasattr\u001b[0m\u001b[1;33m(\u001b[0m\u001b[0mio\u001b[0m\u001b[1;33m,\u001b[0m \u001b[1;34m\"seekable\"\u001b[0m\u001b[1;33m)\u001b[0m \u001b[1;32mand\u001b[0m \u001b[0mio\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0mseekable\u001b[0m\u001b[1;33m(\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m:\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0m\u001b[0;32m    897\u001b[0m                 \u001b[0mio\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0mseek\u001b[0m\u001b[1;33m(\u001b[0m\u001b[1;36m0\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0;32m    898\u001b[0m             \u001b[1;32melif\u001b[0m \u001b[0mhasattr\u001b[0m\u001b[1;33m(\u001b[0m\u001b[0mio\u001b[0m\u001b[1;33m,\u001b[0m \u001b[1;34m\"seekable\"\u001b[0m\u001b[1;33m)\u001b[0m \u001b[1;32mand\u001b[0m \u001b[1;32mnot\u001b[0m \u001b[0mio\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0mseekable\u001b[0m\u001b[1;33m(\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m:\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n",
+      "\u001b[1;31mTypeError\u001b[0m: 'NoneType' object is not callable"
+     ]
+    }
+   ],
+   "source": [
+    "html_facts = browser.html\n",
+    "soup_facts = BeautifulSoup(html_facts, 'html.parser')\n",
+    "\n",
+    "facts = soup_facts.find('table', class_='tablepress tablepress-id-p-mars')\n",
+    "#print(facts.text)\n",
+    "\n",
+    "table = pd.read_html(facts)\n",
+    "table"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Mars Hemispheres"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 72,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "url_hemis = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'\n",
+    "browser.visit(url_hemis)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 83,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<splinter.element_list.ElementList object at 0x000001E0BB287EB8>\n"
+     ]
+    }
+   ],
+   "source": [
+    "#code shared in class by Dom\n",
+    "hemisphere_image_urls = []\n",
+    "links = browser.find_by_css(\"a.product-items h3\")\n",
+    "\n",
+    "for i in range(len(links)):\n",
+    "    hemisphere = {}\n",
+    "    browser.find_by_css(\"a.product-item h3\")[i].click()\n",
+    "    \n",
+    "    sample_elem = browser.find_link_by_text('Sample').first\n",
+    "    hemisphere['img_url'] = sample_elem['href']\n",
+    "    \n",
+    "    hemisphere['title'] = browser.find_by_css(\"h2.title\").text\n",
+    "    \n",
+    "    hemisphere_image_urls.append(hemisphere)\n",
+    "    browser.back()\n",
+    "    "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 80,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[]"
+      ]
+     },
+     "execution_count": 80,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "hemisphere_image_urls"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.9"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
